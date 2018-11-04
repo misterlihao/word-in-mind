@@ -1,4 +1,5 @@
-The example is all you need
+This example is all you need
+
 ```sh
 WORDS=<(head -n 20 words.jp) JSON_DICT=dict.jp ./wim
 ```
