@@ -1,0 +1,7 @@
+The example is all you need
+```sh
+WORDS=<(head -n 20 words.jp) JSON_DICT=dict.jp ./wim
+```
+
+Use google translate without `JSON_DICT` if googletrans is properly installed.
+see [this known issue](https://stackoverflow.com/questions/52455774/googletrans-stopped-working-with-error-nonetype-object-has-no-attribute-group)

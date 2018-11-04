@@ -1,0 +1,62 @@
+#!/usr/bin/env python3
+
+import os
+import json
+
+class Translator:
+    def translate(self, word):
+        return ''
+
+class GoogleTranslator(Translator):
+    def __init__(self):
+        import googletrans
+        self.trans = googletrans.Translator()
+
+    def translate(self, word):
+        return self.trans.translate(word, dest='zh-TW').text
+
+class DictTranslator(Translator):
+    def __init__(self, dictionary):
+        self.dict = dictionary
+
+    def translate(self, word):
+        if word in self.dict:
+            return self.dict[word]
+        else:
+            return word
+
+def main():
+    with open(os.environ['WORDS'], 'r') as f:
+        word_list = f.read().splitlines()
+
+    if 'JSON_DICT' in os.environ:
+        with open(os.environ['JSON_DICT']) as f:
+            trans = DictTranslator(json.load(f))
+    else:
+        trans = GoogleTranslator()
+
+    os.system('clear')
+    print("help:\n")
+    print("1. keep keeping last word in mind")
+    print("2. words should be speakable (or indentifiable) to you")
+    print("3. vocabulary should be big enough to make you forget")
+    input()
+    banner = '> '
+    last = None
+    while True:
+        for index, word in enumerate(word_list):
+            os.system('clear')
+            print(banner+"keep this word in mind\n")
+            print("%d. %s" % (index+1, word))
+            ans = trans.translate(word)
+            print("\n--> %s\n" % ans)
+            input()
+            os.system('clear')
+            if last:
+                print(banner+"try to recall this word:\n\n%s" % last)
+            last = word
+            input()
+        banner = '>' + banner
+
+if __name__ == '__main__':
+    main()
